@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dimitri Jadovski — Full Stack Developer</title>
+<meta name="description" content="Dimitri Jadovski, desenvolvedor full stack estudante de Ciência da Computação e estagiário no Banrisul. Projetos em JavaScript, Java e Node.js.">
+<meta property="og:title" content="Dimitri Jadovski — Full Stack Developer">
+<meta property="og:description" content="Desenvolvedor full stack estudante de Ciência da Computação e estagiário no Banrisul. Projetos em JavaScript, Java e Node.js.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23201e1d'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial,sans-serif' font-weight='800' fill='%23ec3013' text-anchor='middle'%3EDJ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-bg: #fdfcfa;
+    --color-surface: #f7f5f1;
+    --color-neutral-100: #efece6;
+    --color-divider: #e2ddd5;
+    --color-neutral-500: #9b948c;
+    --color-neutral-600: #7c766e;
+    --color-neutral-700: #5c564f;
+    --color-neutral-800: #3a3632;
+    --color-text: #1c1a18;
+    --color-accent: #ec3013;
+    --color-accent-700: #c4260c;
+    --font-heading: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; text-wrap: pretty; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); }
+  h1, h2, h3 { font-family: var(--font-heading); font-weight: 800; margin: 0; }
+  a { color: var(--color-accent); }
+  a:hover { color: var(--color-accent-700); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  button { font-family: inherit; }
+
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; font-family:var(--font-body); font-size:13px; font-weight:600; letter-spacing:.01em; padding:10px 18px; border-radius:0; cursor:pointer; text-decoration:none; appearance:none; border-style:solid; transition:background-color .2s ease, color .2s ease, border-color .2s ease; }
+  .btn-primary { background:var(--color-accent); color:#fff; border:2px solid var(--color-accent); }
+  .btn-primary:hover { background:var(--color-accent-700); border-color:var(--color-accent-700); color:#fff; }
+  .btn-secondary { background:transparent; color:var(--color-text); border:2px solid var(--color-text); }
+  .btn-secondary:hover { background:var(--color-text); color:var(--color-bg); }
+
+  .tag { display:inline-flex; align-items:center; font-family:var(--font-mono); font-size:11px; letter-spacing:.03em; padding:4px 10px; border-radius:0; }
+  .tag-outline { border:1px solid var(--color-divider); color:var(--color-neutral-700); }
+  .tag-accent { background:var(--color-accent); color:#fff; font-weight:600; }
+  .tag-neutral { background:var(--color-neutral-100); color:var(--color-neutral-700); }
+
+  .hr { border:none; height:2px; background:var(--color-divider); }
+
+  .nav { display:flex; align-items:center; gap:28px; padding:22px 0; }
+  .nav a:not(.btn) { color:var(--color-text); text-decoration:none; font-size:14px; font-weight:600; padding:4px 0; }
+  .nav a.active:not(.btn) { color:var(--color-accent-700); }
+  .nav-brand { font-family:var(--font-heading); font-weight:800; font-size:18px; margin-right:auto; }
+
+  .filter-btn { font:inherit; font-size:13px; font-weight:600; cursor:pointer; padding:8px 16px; border:1px solid var(--color-divider); background:transparent; color:var(--color-text); }
+  .filter-btn.active { background:var(--color-accent); color:#fff; border-color:var(--color-accent); }
+
+  @keyframes boot-cursor { 50% { opacity: 0; } }
+  .boot-caret { display:inline-block; animation: boot-cursor 0.9s step-end infinite; }
+  .project-cell { transition: transform .25s ease, background-color .25s ease; }
+  .project-cell:hover { transform: translateY(-4px); background-color: var(--color-surface); }
+  .project-cell.featured:hover { background-color: var(--color-surface); }
+  .bg-diagonal { position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:0.35; background-image:repeating-linear-gradient(135deg, var(--color-accent) 0, var(--color-accent) 1px, transparent 1px, transparent 140px); }
+  .scroll-progress { position:fixed; top:0; left:0; height:3px; background:var(--color-accent); z-index:1000; transition:width .08s linear; width:0%; }
+  .nav-underline { position:absolute; bottom:0; height:2px; background:var(--color-accent); transition:left .25s ease,width .25s ease; opacity:0; }
+  .ghost-num { position:absolute; font-family:var(--font-heading); font-weight:800; font-size:clamp(90px,14vw,180px); color:var(--color-neutral-100); line-height:1; z-index:0; user-select:none; pointer-events:none; top:-30px; right:0; }
+  .section-head { position:relative; overflow:hidden; }
+  @keyframes curtain-left-out { to { transform: translateX(-100%); } }
+  @keyframes curtain-right-out { to { transform: translateX(100%); } }
+  .curtain-left.boot-screen, .curtain-right.boot-screen { animation-duration: 0.6s; animation-timing-function: ease; animation-fill-mode: forwards; }
+  .curtain-left.boot-screen { animation-name: curtain-left-out; }
+  .curtain-right.boot-screen { animation-name: curtain-right-out; }
+  #boot-overlay.hidden { display: none; }
+  @media (max-width: 760px) {
+    .hero-grid { grid-template-columns: 1fr !important; }
+    .hero-photo { width: 120px !important; height: 120px !important; }
+    .hero-stats { grid-template-columns: 1fr 1fr !important; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr !important; }
+    .split-grid { grid-template-columns: 1fr !important; }
+    .exp-row { grid-template-columns: 1fr !important; }
+    .nav a:not(.btn) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="boot-overlay" style="position:fixed;inset:0;z-index:999;cursor:pointer">
+  <div class="curtain-left" id="curtain-left" style="position:absolute;top:0;left:0;width:50%;height:100%;background:var(--color-text)"></div>
+  <div class="curtain-right" id="curtain-right" style="position:absolute;top:0;right:0;width:50%;height:100%;background:var(--color-text)"></div>
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,8vw,120px);font-family:var(--font-heading);color:var(--color-bg)">
+    <div id="boot-lines"></div>
+    <span class="boot-caret" style="font-size:clamp(14px,2.2vw,20px);color:var(--color-accent)">_</span>
+    <div style="position:absolute;bottom:32px;right:32px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-500)">clique para pular</div>
+  </div>
+</div>
+
+<div class="bg-diagonal"></div>
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<div id="top" style="max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,64px)">
+
+  <nav class="nav" id="main-nav" style="margin:0 calc(-1 * clamp(20px,5vw,64px));padding-inline:clamp(20px,5vw,64px);position:relative">
+    <span class="nav-brand">dj<span style="color:var(--color-accent)">.</span>dev</span>
+    <a href="#projects" data-nav-id="projects">Projetos</a>
+    <a href="#processo" data-nav-id="processo">Processo</a>
+    <a href="#sobre" data-nav-id="sobre">Sobre</a>
+    <a href="#experiencia" data-nav-id="experiencia">Experiência</a>
+    <a href="#contato" class="btn btn-primary" style="margin-left:8px">Contato</a>
+    <div class="nav-underline" id="nav-underline"></div>
+  </nav>
+
+  <!-- HERO -->
+  <section style="padding:72px 0 40px">
+    <div class="hero-grid" style="display:grid;grid-template-columns:1fr 200px;gap:40px;align-items:start">
+      <div>
+        <p style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent-700);margin:0 0 20px">
+          Full Stack Developer &nbsp;·&nbsp; Porto Alegre, BR
+        </p>
+        <h1 style="font-size:clamp(38px,6vw,64px);line-height:1.05;letter-spacing:-0.02em;margin:0">
+          Dimitri Jadovski.<br>
+          <span style="color:var(--color-neutral-700)">Do banco de dados à interface.</span>
+        </h1>
+        <p style="font-size:16px;line-height:1.6;color:var(--color-neutral-800);max-width:56ch;margin:24px 0 0">
+          Estudante de Ciência da Computação (4º semestre) e estagiário no Banrisul. Construo aplicações web com foco em performance e clareza de código.
+        </p>
+      </div>
+      <div class="hero-photo" role="img" aria-label="Foto de perfil (em breve)" style="width:200px;height:200px;border:2px solid var(--color-divider);background:var(--color-neutral-100);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+      </div>
+    </div>
+
+    <div class="hero-stats" style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:24px;align-items:center;border-top:2px solid var(--color-divider);margin-top:40px;padding-top:24px">
+      <div>
+        <div style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:4px">Especialidade</div>
+        <div style="font-size:14px"><strong>JavaScript · Java</strong> · Node · CSS</div>
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:4px">Formação</div>
+        <div style="font-size:14px">Ciência da Computação</div>
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:4px">Modalidade</div>
+        <div style="font-size:14px">Remoto <strong>·</strong> Freelance</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <a href="#projects" class="btn btn-primary">Ver projetos</a>
+        <a href="#contato" class="btn btn-secondary">Contato</a>
+        <a href="dimitri-jadovski-cv.pdf" download class="btn btn-secondary">Baixar CV</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr" style="margin:0">
+
+  <!-- STACK TAGS -->
+  <section style="padding:24px 0;display:flex;flex-wrap:wrap;gap:8px">
+    <span class="tag tag-outline">JavaScript</span>
+    <span class="tag tag-outline">Java</span>
+    <span class="tag tag-outline">Node.js</span>
+    <span class="tag tag-outline">HTML &amp; CSS</span>
+    <span class="tag tag-outline">REST APIs</span>
+    <span class="tag tag-outline">Git &amp; GitHub</span>
+    <span class="tag tag-outline">OOP</span>
+    <span class="tag tag-outline">Algoritmos</span>
+  </section>
+
+  <hr class="hr" style="margin:0">
+
+  <!-- PROJECTS -->
+  <section id="projects" style="padding:64px 0">
+    <div class="section-head" style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--color-divider);padding-bottom:16px;margin-bottom:40px">
+      <span class="ghost-num">01</span>
+      <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);position:relative">01</span>
+      <h2 style="margin:0;font-size:clamp(24px,3vw,32px);position:relative">Projetos selecionados</h2>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap" id="filter-row">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="javascript">JavaScript</button>
+      <button class="filter-btn" data-filter="java">Java</button>
+      <button class="filter-btn" data-filter="typescript">TypeScript</button>
+    </div>
+
+    <!-- Featured: Netflix UI -->
+    <div class="project-cell featured" style="border:2px solid var(--color-divider);margin-bottom:24px">
+      <div style="padding:32px;background:var(--color-surface)">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px">
+          <span class="tag tag-accent">Destaque</span>
+          <span class="tag tag-neutral">JavaScript</span>
+          <span class="tag tag-neutral">HTML</span>
+          <span class="tag tag-neutral">CSS</span>
+          <span class="tag tag-neutral">DOM API</span>
+        </div>
+        <h3 style="font-size:28px;margin:0 0 12px">Netflix UI — <span style="color:var(--color-neutral-700)">componentes complexos</span></h3>
+        <p style="font-size:14px;line-height:1.7;color:var(--color-neutral-800);max-width:70ch;margin:0 0 20px">
+          Reconstrução da interface da Netflix com foco em performance. O desafio real não foi "fazer parecer igual" — foi gerenciar estado de carrossel com lazy loading sem degradar o scroll.
+        </p>
+        <div style="border-left:3px solid var(--color-accent);padding:12px 16px;background:var(--color-neutral-100);margin-bottom:24px">
+          <div style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:5px">Decisão técnica</div>
+          <div style="font-size:13px;line-height:1.6;color:var(--color-neutral-800)">Intersection Observer API no lugar de scroll event listeners. Callbacks só quando necessário, zero re-renders desnecessários.</div>
+        </div>
+        <div id="stats-trigger" style="display:flex;align-items:center;justify-content:space-between;border-top:2px solid var(--color-divider);padding-top:20px;flex-wrap:wrap;gap:16px">
+          <div style="display:flex;gap:32px">
+            <div><div style="font-size:24px;font-family:var(--font-heading);font-weight:800"><span id="stat1">0</span>%</div><div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--color-neutral-600)">menos re-renders</div></div>
+            <div><div style="font-size:24px;font-family:var(--font-heading);font-weight:800"><span id="stat2">0</span></div><div style="font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--color-neutral-600)">componentes</div></div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <a href="https://netflix-2j7n.onrender.com/" target="_blank" class="btn btn-primary">Demo →</a>
+            <a href="https://github.com/Dimigol/Netflix" target="_blank" class="btn btn-secondary">Código</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary grid -->
+    <div class="split-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--color-divider);border:2px solid var(--color-divider);margin-bottom:24px">
+      <div class="project-cell" data-tech="javascript java" style="background:var(--color-bg);padding:28px">
+        <span style="font-size:10px;letter-spacing:0.1em;color:var(--color-neutral-600);display:block;margin-bottom:16px">02 — Java · JavaScript · HTML</span>
+        <h3 style="font-size:20px;margin:0 0 10px">RPG Game</h3>
+        <p style="font-size:13px;line-height:1.65;color:var(--color-neutral-800);margin:0 0 14px">Sistema de RPG com mecânicas de batalha e progressão de personagem. Iniciado em Java puro e portado para web — o que forçou uma reflexão real sobre separação entre lógica de domínio e apresentação.</p>
+        <div style="font-size:12px;line-height:1.5;color:var(--color-neutral-700);border-top:1px solid var(--color-divider);padding-top:12px;margin-bottom:14px"><strong style="color:var(--color-accent-700)">Aprendizado:</strong> a mesma lógica se comporta diferente em ambientes síncronos (Java) vs assíncronos (browser).</div>
+        <div style="display:flex;gap:16px">
+          <a href="https://dimigol.github.io/rpg-game/" target="_blank" style="font-size:12px;font-weight:600">Demo →</a>
+          <a href="https://github.com/Dimigol/rpg-game" target="_blank" style="font-size:12px;color:var(--color-neutral-700)">Código</a>
+        </div>
+      </div>
+      <div class="project-cell" data-tech="javascript" style="background:var(--color-bg);padding:28px">
+        <span style="font-size:10px;letter-spacing:0.1em;color:var(--color-neutral-600);display:block;margin-bottom:16px">03 — JavaScript · Algoritmos</span>
+        <h3 style="font-size:20px;margin:0 0 10px">Jogo da Velha — Minimax</h3>
+        <p style="font-size:13px;line-height:1.65;color:var(--color-neutral-800);margin:0 0 14px">Múltiplos níveis de dificuldade. O modo difícil usa o algoritmo Minimax — uma exploração prática de recursão e árvores de decisão, não apenas "um joguinho".</p>
+        <div style="font-size:12px;line-height:1.5;color:var(--color-neutral-700);border-top:1px solid var(--color-divider);padding-top:12px;margin-bottom:14px"><strong style="color:var(--color-accent-700)">Decisão técnica:</strong> alpha-beta pruning para otimizar a árvore de busca sem impactar a experiência do usuário.</div>
+        <div style="display:flex;gap:16px">
+          <a href="https://dimigol.github.io/Jogo-Da-Velha/" target="_blank" style="font-size:12px;font-weight:600">Demo →</a>
+          <a href="https://github.com/Dimigol/Jogo-Da-Velha" target="_blank" style="font-size:12px;color:var(--color-neutral-700)">Código</a>
+        </div>
+      </div>
+      <div class="project-cell" data-tech="typescript" style="background:var(--color-bg);padding:28px">
+        <span style="font-size:10px;letter-spacing:0.1em;color:var(--color-neutral-600);display:block;margin-bottom:16px">04 — TypeScript · TSX</span>
+        <h3 style="font-size:20px;margin:0 0 10px">Banking</h3>
+        <p style="font-size:13px;line-height:1.65;color:var(--color-neutral-800);margin:0 0 14px">Simulação de operações bancárias — contas, depósitos, saques e transferências — modelada em orientação a objetos.</p>
+        <div style="display:flex;gap:16px">
+          <a href="https://github.com/Dimigol/banking" target="_blank" style="font-size:12px;color:var(--color-neutral-700)">Código</a>
+        </div>
+      </div>
+      <div class="project-cell" data-tech="" style="background:var(--color-bg);padding:28px">
+        <span style="font-size:10px;letter-spacing:0.1em;color:var(--color-neutral-600);display:block;margin-bottom:16px">05 — Luau</span>
+        <h3 style="font-size:20px;margin:0 0 10px">Steal a Startup</h3>
+        <p style="font-size:13px;line-height:1.65;color:var(--color-neutral-800);margin:0 0 14px">Jogo no Roblox baseado em mecânicas de negociação e disputa entre startups. Ainda não publicado.</p>
+        <div style="display:flex;gap:16px">
+          <a href="https://github.com/Dimigol/Steal-a-Startup" target="_blank" style="font-size:12px;color:var(--color-neutral-700)">Código</a>
+        </div>
+      </div>
+      <div class="project-cell" data-tech="javascript" style="background:var(--color-bg);padding:28px;grid-column:1 / -1">
+        <span style="font-size:10px;letter-spacing:0.1em;color:var(--color-neutral-600);display:block;margin-bottom:16px">06 — JavaScript · APIs</span>
+        <h3 style="font-size:20px;margin:0 0 10px">Coinverter</h3>
+        <p style="font-size:13px;line-height:1.65;color:var(--color-neutral-800);margin:0 0 14px">Conversor entre moedas fiat e as 20 principais criptomoedas, com gráfico de histórico de preço (24h a 1 ano) via Chart.js.</p>
+        <div style="font-size:12px;line-height:1.5;color:var(--color-neutral-700);border-top:1px solid var(--color-divider);padding-top:12px;margin-bottom:14px"><strong style="color:var(--color-accent-700)">Integrações:</strong> AwesomeAPI (câmbio) e CoinGecko (cripto e histórico).</div>
+        <div style="display:flex;gap:16px">
+          <a href="https://dimigol.github.io/Coinverter/HomeCoinvert.html" target="_blank" style="font-size:12px;font-weight:600">Demo →</a>
+          <a href="https://github.com/Dimigol/Coinverter" target="_blank" style="font-size:12px;color:var(--color-neutral-700)">Código</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PortfolioOS featured -->
+    <div class="project-cell featured" style="border:2px solid var(--color-divider);margin-bottom:24px">
+      <div style="padding:32px;background:var(--color-surface)">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px">
+          <span class="tag tag-accent">Destaque</span>
+          <span class="tag tag-neutral">TypeScript</span>
+          <span class="tag tag-neutral">Next.js</span>
+          <span class="tag tag-neutral">Prisma</span>
+          <span class="tag tag-neutral">Postgres</span>
+        </div>
+        <h3 style="font-size:28px;margin:0 0 12px">PortfolioOS — <span style="color:var(--color-neutral-700)">gestão de investimentos</span></h3>
+        <p style="font-size:14px;line-height:1.7;color:var(--color-neutral-800);max-width:70ch;margin:0 0 20px">
+          Plataforma para gerenciar carteiras de investimento: alocação de ativos, comparação com benchmarks, importação de transações e cálculo de impostos, com dashboard em Next.js sobre Postgres/Prisma.
+        </p>
+        <div style="border-left:3px solid var(--color-accent);padding:12px 16px;background:var(--color-neutral-100);margin-bottom:24px">
+          <div style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:5px">Destaques técnicos</div>
+          <div style="font-size:13px;line-height:1.6;color:var(--color-neutral-800)">Schema no Prisma para múltiplas contas e classes de ativos, com importação de transações e cálculo de impostos desacoplados do dashboard.</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <a href="https://github.com/Dimigol/PortfolioOS" target="_blank" class="btn btn-secondary">Código</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experiments -->
+    <div style="display:flex;align-items:center;border:2px solid var(--color-divider);flex-wrap:wrap">
+      <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);padding:12px 16px;border-right:2px solid var(--color-divider);background:var(--color-surface)">Experimentos</span>
+      <div style="display:flex;flex-wrap:wrap;padding:6px 10px;gap:4px">
+        <a href="https://github.com/Dimigol/blackjack" target="_blank" style="font-size:13px;color:var(--color-neutral-700);padding:6px 10px">Blackjack</a>
+        <a href="https://github.com/Dimigol/calculadora" target="_blank" style="font-size:13px;color:var(--color-neutral-700);padding:6px 10px">Calculadora</a>
+        <a href="https://github.com/Dimigol/jogo-do-numero" target="_blank" style="font-size:13px;color:var(--color-neutral-700);padding:6px 10px">Número Secreto</a>
+        <a href="https://github.com/Dimigol" target="_blank" style="font-size:13px;font-weight:600;padding:6px 10px">GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr" style="margin:0">
+
+  <!-- PROCESS -->
+  <section id="processo" style="padding:64px 0">
+    <div class="section-head" style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--color-divider);padding-bottom:16px;margin-bottom:40px">
+      <span class="ghost-num">02</span>
+      <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);position:relative">02</span>
+      <h2 style="margin:0;font-size:clamp(24px,3vw,32px);position:relative">Como penso</h2>
+    </div>
+    <div class="split-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--color-divider);border:2px solid var(--color-divider)">
+      <div style="background:var(--color-bg);padding:28px">
+        <span style="font-size:10px;letter-spacing:0.1em;color:var(--color-accent-700);display:block;margin-bottom:12px">01</span>
+        <h3 style="font-size:17px;margin:0 0 8px">Entender antes de implementar</h3>
+        <p style="font-size:13px;line-height:1.7;color:var(--color-neutral-800);margin:0">Antes de abrir o editor, preciso entender o contexto. Quem usa? Com que frequência? O que acontece quando falha? Essas respostas definem a arquitetura — não o tutorial mais recente.</p>
+      </div>
+      <div style="background:var(--color-bg);padding:28px">
+        <span style="font-size:10px;letter-spacing:0.1em;color:var(--color-accent-700);display:block;margin-bottom:12px">02</span>
+        <h3 style="font-size:17px;margin:0 0 8px">Performance é feature</h3>
+        <p style="font-size:13px;line-height:1.7;color:var(--color-neutral-800);margin:0">Uma interface que trava não é "funcional com um bug" — é uma interface quebrada. Considero performance desde a decisão de arquitetura, não como otimização posterior.</p>
+      </div>
+      <div style="background:var(--color-bg);padding:28px">
+        <span style="font-size:10px;letter-spacing:0.1em;color:var(--color-accent-700);display:block;margin-bottom:12px">03</span>
+        <h3 style="font-size:17px;margin:0 0 8px">Código que outros conseguem manter</h3>
+        <p style="font-size:13px;line-height:1.7;color:var(--color-neutral-800);margin:0">O código que escrevo hoje vai ser lido em 6 meses. Nomeação clara, funções com responsabilidade única, comentários que explicam o porquê — não o quê.</p>
+      </div>
+      <div style="background:var(--color-bg);padding:28px">
+        <span style="font-size:10px;letter-spacing:0.1em;color:var(--color-accent-700);display:block;margin-bottom:12px">04</span>
+        <h3 style="font-size:17px;margin:0 0 8px">Complexidade tem custo</h3>
+        <p style="font-size:13px;line-height:1.7;color:var(--color-neutral-800);margin:0">Cada abstração precisa ser justificada. Se um array com filter resolve, não vou inventar um design pattern. A melhor solução é a mais simples que funciona de verdade.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr" style="margin:0">
+
+  <!-- ABOUT -->
+  <section id="sobre" style="padding:64px 0">
+    <div class="section-head" style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--color-divider);padding-bottom:16px;margin-bottom:40px">
+      <span class="ghost-num">03</span>
+      <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);position:relative">03</span>
+      <h2 style="margin:0;font-size:clamp(24px,3vw,32px);position:relative">Sobre</h2>
+    </div>
+    <div class="about-grid" style="display:grid;grid-template-columns:1fr 280px;gap:56px;align-items:start">
+      <div>
+        <h3 style="font-size:clamp(22px,3vw,28px);line-height:1.15;margin:0 0 20px">Desenvolvedor <span style="color:var(--color-neutral-700)">fullstack</span> focado em produto.</h3>
+        <p style="font-size:14px;line-height:1.8;color:var(--color-neutral-800);margin:0 0 16px">Foco em aplicações web que precisam de <strong>performance, clareza de código e manutenibilidade</strong>. Estudando Ciência da Computação, mas meu aprendizado acontece principalmente construindo coisas reais e investigando por que elas falham.</p>
+        <p style="font-size:14px;line-height:1.8;color:var(--color-neutral-800);margin:0 0 16px">Gosto de projetos onde solução técnica e experiência do usuário são inseparáveis — onde uma decisão de arquitetura impacta diretamente o que a pessoa sente ao usar o produto.</p>
+        <p style="font-size:14px;line-height:1.8;color:var(--color-neutral-800);margin:0">Atualmente aprofundando <strong>Node.js, arquiteturas REST</strong> e boas práticas de engenharia. Disponível para freelance e oportunidades remotas.</p>
+      </div>
+      <div>
+        <div style="padding-bottom:20px;border-bottom:1px solid var(--color-divider);margin-bottom:20px">
+          <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:10px">Stack</div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--color-divider);font-size:13px"><span style="color:var(--color-neutral-800)">JavaScript</span><span style="color:var(--color-accent-700);font-weight:600">••••○</span></div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--color-divider);font-size:13px"><span style="color:var(--color-neutral-800)">Java</span><span style="color:var(--color-accent-700);font-weight:600">•••○○</span></div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--color-divider);font-size:13px"><span style="color:var(--color-neutral-800)">HTML &amp; CSS</span><span style="color:var(--color-accent-700);font-weight:600">•••••</span></div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--color-divider);font-size:13px"><span style="color:var(--color-neutral-800)">Node.js</span><span style="color:var(--color-accent-700);font-weight:600">•••○○</span></div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px"><span style="color:var(--color-neutral-800)">Git</span><span style="color:var(--color-accent-700);font-weight:600">••••○</span></div>
+        </div>
+        <div style="padding-bottom:20px;border-bottom:1px solid var(--color-divider);margin-bottom:20px">
+          <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:10px">Agora</div>
+          <p style="font-size:12px;line-height:1.65;color:var(--color-neutral-800);margin:0">Aprofundando Node.js e arquiteturas REST. Explorando design de sistemas e engenharia de software.</p>
+        </div>
+        <div style="padding-bottom:20px;border-bottom:1px solid var(--color-divider);margin-bottom:20px">
+          <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:10px">Formação</div>
+          <p style="font-size:12px;line-height:1.65;color:var(--color-neutral-800);margin:0">Ciência da Computação — em andamento (4º semestre)</p>
+        </div>
+        <div>
+          <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:10px">Idiomas</div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--color-divider);font-size:13px"><span style="color:var(--color-neutral-800)">Português</span><span style="color:var(--color-accent-700);font-weight:600">Nativo</span></div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--color-divider);font-size:13px"><span style="color:var(--color-neutral-800)">Inglês</span><span style="color:var(--color-accent-700);font-weight:600">Avançado</span></div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px"><span style="color:var(--color-neutral-800)">Espanhol</span><span style="color:var(--color-accent-700);font-weight:600">Intermediário</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr" style="margin:0">
+
+  <!-- EXPERIENCE -->
+  <section id="experiencia" style="padding:64px 0">
+    <div class="section-head" style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--color-divider);padding-bottom:16px;margin-bottom:40px">
+      <span class="ghost-num">04</span>
+      <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);position:relative">04</span>
+      <h2 style="margin:0;font-size:clamp(24px,3vw,32px);position:relative">Experiência</h2>
+    </div>
+    <div class="exp-row" style="display:grid;grid-template-columns:minmax(64px,160px) 1fr;gap:24px clamp(24px,4vw,64px);align-items:baseline;padding:20px 0;border-top:2px solid var(--color-divider)">
+      <p style="font-family:var(--font-heading);font-weight:800;font-size:14px;margin:0">Atual</p>
+      <div>
+        <h3 style="font-size:19px;margin:0 0 6px">Estagiário — Banrisul</h3>
+        <p style="font-size:13.5px;line-height:1.7;color:var(--color-neutral-800);margin:0">Atuação como estagiário de desenvolvimento, aplicando na prática conceitos estudados na graduação em Ciência da Computação.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hr" style="margin:0">
+
+  <!-- CONTACT -->
+  <section id="contato" style="padding:64px 0">
+    <div class="section-head" style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--color-divider);padding-bottom:16px;margin-bottom:40px">
+      <span class="ghost-num">05</span>
+      <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600);position:relative">05</span>
+      <h2 style="margin:0;font-size:clamp(24px,3vw,32px);position:relative">Contato</h2>
+    </div>
+    <div class="contact-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start">
+      <div>
+        <h3 style="font-size:clamp(26px,4vw,38px);line-height:1.1;margin:0 0 16px">Tem um problema técnico para <span style="color:var(--color-neutral-700)">resolver?</span></h3>
+        <a href="dimitri-jadovski-cv.pdf" download class="btn btn-secondary" style="margin-bottom:20px;display:inline-flex">Baixar CV (PDF)</a>
+        <p style="font-size:14px;line-height:1.7;color:var(--color-neutral-800);margin:0 0 28px">Me conta o contexto — o que você está construindo, onde está travado, ou qual oportunidade está avaliando. Respondo em até 24h.</p>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--color-divider)">
+            <a href="mailto:dimitrijadovski@gmail.com" style="text-decoration:none;display:flex;flex-direction:column;gap:2px">
+              <span style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600)">Email</span>
+              <span style="font-size:14px;color:var(--color-text)">dimitrijadovski@gmail.com</span>
+            </a>
+            <button id="copy-email-btn" style="font:inherit;font-size:11px;font-weight:600;cursor:pointer;padding:6px 10px;border:1px solid var(--color-divider);background:transparent;color:var(--color-neutral-700)">Copiar</button>
+          </div>
+          <a href="https://github.com/Dimigol" target="_blank" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--color-divider);text-decoration:none">
+            <span style="display:flex;flex-direction:column;gap:2px">
+              <span style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600)">GitHub</span>
+              <span style="font-size:14px;color:var(--color-text)">github.com/Dimigol</span>
+            </span>
+            <span style="font-size:15px;color:var(--color-neutral-600)">↗</span>
+          </a>
+          <a href="https://www.linkedin.com/in/dimitricjadovski/" target="_blank" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--color-divider);text-decoration:none">
+            <span style="display:flex;flex-direction:column;gap:2px">
+              <span style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600)">LinkedIn</span>
+              <span style="font-size:14px;color:var(--color-text)">dimitricjadovski</span>
+            </span>
+            <span style="font-size:15px;color:var(--color-neutral-600)">↗</span>
+          </a>
+        </div>
+      </div>
+      <div style="border:2px solid var(--color-divider)">
+        <div style="padding:12px 16px;border-bottom:2px solid var(--color-divider);background:var(--color-surface);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600)">O que acredito</div>
+        <div style="display:flex;gap:12px;align-items:baseline;padding:14px 16px;border-bottom:1px solid var(--color-divider);font-size:13px;color:var(--color-neutral-800)"><span style="color:var(--color-accent);flex-shrink:0">—</span>Código com nomes claros e funções pequenas é mais fácil de manter.</div>
+        <div style="display:flex;gap:12px;align-items:baseline;padding:14px 16px;border-bottom:1px solid var(--color-divider);font-size:13px;color:var(--color-neutral-800)"><span style="color:var(--color-accent);flex-shrink:0">—</span>Performance não é otimização — é decisão de arquitetura.</div>
+        <div style="display:flex;gap:12px;align-items:baseline;padding:14px 16px;border-bottom:1px solid var(--color-divider);font-size:13px;color:var(--color-neutral-800)"><span style="color:var(--color-accent);flex-shrink:0">—</span>A melhor solução raramente é a mais complexa.</div>
+        <div style="display:flex;gap:12px;align-items:baseline;padding:14px 16px;border-bottom:1px solid var(--color-divider);font-size:13px;color:var(--color-neutral-800)"><span style="color:var(--color-accent);flex-shrink:0">—</span>Entender o problema é metade da solução.</div>
+        <div style="display:flex;gap:12px;align-items:baseline;padding:14px 16px;font-size:13px;color:var(--color-neutral-800)"><span style="color:var(--color-accent);flex-shrink:0">—</span>Bugs interessantes ensinam mais que tutoriais.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top:2px solid var(--color-divider);padding:24px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <span style="font-size:11px;color:var(--color-neutral-600)">© 2026 Dimitri Jadovski</span>
+    <a href="#top" style="font-size:11px;color:var(--color-neutral-600)">Voltar ao topo ↑</a>
+    <div style="display:flex;gap:20px">
+      <a href="mailto:dimitrijadovski@gmail.com" style="font-size:11px;color:var(--color-neutral-600)">Email</a>
+      <a href="https://github.com/Dimigol" target="_blank" style="font-size:11px;color:var(--color-neutral-600)">GitHub</a>
+      <a href="https://www.linkedin.com/in/dimitricjadovski/" target="_blank" style="font-size:11px;color:var(--color-neutral-600)">LinkedIn</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bootLines = ['> conectando...', '> carregando Dimitri Jadovski_', '> stack: JS · Java · Node', '> pronto.'];
+  var bootOverlay = document.getElementById('boot-overlay');
+  var bootLinesEl = document.getElementById('boot-lines');
+  var curtainLeft = document.getElementById('curtain-left');
+  var curtainRight = document.getElementById('curtain-right');
+  var bootTimer = null;
+  var bootFinished = false;
+
+  function renderBootLine(text) {
+    var div = document.createElement('div');
+    div.style.fontSize = 'clamp(14px,2.2vw,20px)';
+    div.style.lineHeight = '1.9';
+    div.style.letterSpacing = '-0.01em';
+    div.textContent = text;
+    bootLinesEl.appendChild(div);
+  }
+
+  function finishBoot() {
+    if (bootFinished) return;
+    bootFinished = true;
+    clearInterval(bootTimer);
+    curtainLeft.classList.add('boot-screen');
+    curtainRight.classList.add('boot-screen');
+    setTimeout(function () { bootOverlay.classList.add('hidden'); }, 600);
+  }
+
+  if (reduceMotion) {
+    finishBoot();
+    bootOverlay.classList.add('hidden');
+  } else {
+    var i = 0;
+    bootTimer = setInterval(function () {
+      if (i >= bootLines.length) { finishBoot(); return; }
+      renderBootLine(bootLines[i]);
+      i++;
+    }, 420);
+    bootOverlay.addEventListener('click', finishBoot);
+  }
+
+  // Scroll progress
+  var progressEl = document.getElementById('scroll-progress');
+  function updateScrollProgress() {
+    var h = document.documentElement;
+    var pct = h.scrollHeight > h.clientHeight ? (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 : 0;
+    progressEl.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', updateScrollProgress, { passive: true });
+  updateScrollProgress();
+
+  // Active-section nav underline
+  var nav = document.getElementById('main-nav');
+  var underline = document.getElementById('nav-underline');
+  var navLinks = nav.querySelectorAll('[data-nav-id]');
+  var sectionIds = ['projects', 'processo', 'sobre', 'experiencia', 'contato'];
+  var activeId = '';
+
+  function updateUnderline() {
+    var active = nav.querySelector('[data-nav-id="' + activeId + '"]');
+    navLinks.forEach(function (l) { l.classList.toggle('active', l === active); });
+    if (active) {
+      underline.style.left = active.offsetLeft + 'px';
+      underline.style.width = active.offsetWidth + 'px';
+      underline.style.opacity = '1';
+    } else {
+      underline.style.opacity = '0';
+    }
+  }
+
+  var sectionObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { activeId = e.target.id; updateUnderline(); }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sectionIds.forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
+
+  // Stat counters
+  function animateStat(el, target, duration) {
+    var start = performance.now();
+    function step(now) {
+      var p = Math.min(1, (now - start) / duration);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var statsTrigger = document.getElementById('stats-trigger');
+  var statsOn = false;
+  if (statsTrigger) {
+    var statObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && !statsOn) {
+          statsOn = true;
+          animateStat(document.getElementById('stat1'), 40, 700);
+          animateStat(document.getElementById('stat2'), 5, 700);
+        }
+      });
+    }, { threshold: 0.4 });
+    statObserver.observe(statsTrigger);
+  }
+
+  // Project filters
+  var filterButtons = document.querySelectorAll('.filter-btn');
+  var projectCells = document.querySelectorAll('.split-grid .project-cell[data-tech]');
+  filterButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var filter = btn.getAttribute('data-filter');
+      filterButtons.forEach(function (b) { b.classList.toggle('active', b === btn); });
+      projectCells.forEach(function (cell) {
+        var tech = (cell.getAttribute('data-tech') || '').split(' ');
+        var show = filter === 'all' || tech.indexOf(filter) !== -1;
+        cell.style.display = show ? 'block' : 'none';
+      });
+    });
+  });
+
+  // Copy email
+  var copyBtn = document.getElementById('copy-email-btn');
+  var copyTimeout = null;
+  copyBtn.addEventListener('click', function () {
+    navigator.clipboard.writeText('dimitrijadovski@gmail.com').catch(function () {});
+    copyBtn.textContent = 'Copiado ✓';
+    clearTimeout(copyTimeout);
+    copyTimeout = setTimeout(function () { copyBtn.textContent = 'Copiar'; }, 2000);
+  });
+})();
+</script>
+
+</body>
+</html>
