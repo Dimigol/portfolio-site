@@ -66,6 +66,7 @@
   .project-cell:hover { transform: translateY(-4px); background-color: var(--color-surface); }
   .project-cell.featured:hover { background-color: var(--color-surface); }
   .bg-diagonal { position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:0.35; background-image:repeating-linear-gradient(135deg, var(--color-accent) 0, var(--color-accent) 1px, transparent 1px, transparent 140px); }
+  .bg-dragon { position:fixed; top:-5%; right:-8%; width:min(55vw,760px); z-index:-1; pointer-events:none; opacity:0.07; mix-blend-mode:multiply; }
   .scroll-progress { position:fixed; top:0; left:0; height:3px; background:var(--color-accent); z-index:1000; transition:width .08s linear; width:0%; }
   .nav-underline { position:absolute; bottom:0; height:2px; background:var(--color-accent); transition:left .25s ease,width .25s ease; opacity:0; }
   .ghost-num { position:absolute; font-family:var(--font-heading); font-weight:800; font-size:clamp(90px,14vw,180px); color:var(--color-neutral-100); line-height:1; z-index:0; user-select:none; pointer-events:none; top:-30px; right:0; }
@@ -100,6 +101,7 @@
 </div>
 
 <div class="bg-diagonal"></div>
+<img class="bg-dragon" src="assets/dragon.webp" alt="">
 <div class="scroll-progress" id="scroll-progress"></div>
 
 <div id="top" style="max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,64px)">
